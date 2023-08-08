@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cool Countdown</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .countdown-container {
+            display: inline-flex;
+            margin-top: 50px;
+        }
+
+        .countdown-box {
+            background-color: #444;
+            border: 2px solid #555;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 0 10px;
+        }
+
+        .countdown-box h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+
+        .countdown-box p {
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .message {
+            display: none;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown-container">
+        <div class="countdown-box">
+            <h1 id="days">00</h1>
+            <p>Days</p>
+        </div>
+        <div class="countdown-box">
+            <h1 id="hours">00</h1>
+            <p>Hours</p>
+        </div>
+        <div class="countdown-box">
+            <h1 id="minutes">00</h1>
+            <p>Minutes</p>
+        </div>
+        <div class="countdown-box">
+            <h1 id="seconds">00</h1>
+            <p>Seconds</p>
+        </div>
+    </div>
+    <h2 class="message">Countdown is over! Enjoy the event!</h2>
+
+    <script>
+        const countdownDate = new Date("December 31, 2022 23:59:59").getTime();
+        const daysElement = document.getElementById("days");
+        const hoursElement = document.getElementById("hours");
+        const minutesElement = document.getElementById("minutes");
+        const secondsElement = document.getElementById("seconds");
+        const messageElement = document.querySelector(".message");
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeLeft = countdownDate - now;
+
+            if (timeLeft < 0) {
+                clearInterval(interval);
+                messageElement.style.display = "block";
+                document.querySelector(".countdown-container").style.display = "none";
+                return;
+            }
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            daysElement.textContent = days.toString().padStart(2, "0");
+            hoursElement.textContent = hours.toString().padStart(2, "0");
+            minutesElement.textContent = minutes.toString().padStart(2, "0");
+            secondsElement.textContent = seconds.toString().padStart(2, "0");
+        }
+
+        const interval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
